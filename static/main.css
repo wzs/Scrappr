@@ -1,0 +1,77 @@
+		
+		h1 span {
+			color: blue;
+		}
+		
+		label {
+			display: block;
+			width: 30em;
+			margin-bottom: 1em;
+		}
+		
+		label input {
+			display: block;
+			width: 30em;
+			padding: 3px;
+		}
+		
+		label input[type=number] {
+			width: 3em;
+		}
+		
+		label em {
+			font-weight: normal;
+			color: gray;
+		}
+		
+		.loading {
+			margin-top: 2em;
+			min-height: 66px;
+			background: url('ajax-loader.gif') no-repeat center center;
+		}
+			
+		.loaded, header {
+			margin-top: 2em;
+			padding-top: 1em;
+			border-radius: 1em;
+			border: 2px solid silver;
+			background: whitesmoke;
+		}
+		
+		fieldset {
+			height: 0px;
+			overflow: hidden;
+			border: none;
+			padding: 1em 0;
+			border: 2px dashed transparent;
+			border-radius: 1em;
+		}
+		
+		fieldset legend {
+			color: silver;
+			cursor: pointer;
+		}
+
+		fieldset.expanded legend, fieldset legend:hover {
+			color: gray;
+		}
+		
+		fieldset legend:before{
+			content: "→ ";
+			font-weight: normal;
+			font-family: monospace;
+		}
+		
+		fieldset.expanded legend:before {
+			content: "↓ ";
+		}
+		
+		fieldset.expanded {
+			height: auto;
+			border: 2px dashed silver;
+		}
+		
+		fieldset label {
+			margin-left: 2em;
+		}
+		
