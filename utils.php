@@ -1,4 +1,5 @@
 <?php 
+define(SCRAPPR_PREFIX, 'scrappr_');
 
 function strip_tags_content($text, $tags = '', $invert = FALSE) {
 
@@ -52,6 +53,42 @@ function fetchEntries($format, $selector, $increase = 1, $start = 1, $limit = 0)
     		break;
     }	
     return $entries;
+}
+
+/**
+ * Saves given entries in tmp sqlite database
+ * @param array $entries
+ * @return string path to the db file
+ * @throws Exception
+ */
+function saveEntriesToSqlite($entries) {
+
+	$createSyntax = file_get_contents("db/schema.sql");
+	$insertSyntax = file_get_contents("db/insert.sql");
+	
+	$tmpFileName = tempnam("./tmp", SCRAPPR_PREFIX);
+	if (!$tmpFileName) {
+		throw new Exception("Cannot create tmp file");
+	}
+	$path = realpath($tmpFileName);
+	
+	$pdo = new PDO("sqlite:" . $path);
+	
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$pdo->exec($createSyntax);
+
+	$stmt = $pdo->prepare($insertSyntax);
+		
+	$pdo->beginTransaction();
+	foreach ($entries as $entry) {
+		$stmt->bindValue(1, $entry);
+		$stmt->execute();
+	}
+	$pdo->commit();
+	
+	$pdo = null;
+	
+	return $path;
 }
 
 ?>

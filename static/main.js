@@ -4,12 +4,14 @@
 		
 		
 	    $("header form").submit(function(){
-
+	    	
 	    	var format 		= $('input[name=format]').val();
 	    	var selector 	= $('input[name=selector]').val();
 	    	var increase 	= $('input[name=increase]').val();
 	    	var start 		= $('input[name=start]').val();
 	    	var limit 		= $('input[name=limit]').val();
+	    	var output 		= $('select[name=output]').val();
+	    	
 	    	
 	    	
 
@@ -26,7 +28,8 @@
 		    	'selector': selector, 
 		    	'increase': increase,
 		    	'limit' : limit,
-		    	'start' : start
+		    	'start' : start,
+		    	'output': output
 		    	}, function() {
 	    			$(this).removeClass("loading").addClass("loaded");
 	        });

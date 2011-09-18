@@ -4,10 +4,6 @@ require 'Slim/Slim.php';
 require 'lib/phpQuery.php';
 require 'utils.php';
 
-ini_set('max_execution_time', 0);
-ini_set('display_errors', true);
-
-
 $app = new Slim(array(
 	'mode' => 'development',
 ));
@@ -32,17 +28,41 @@ function p1() {
     $limit 		= $_POST['limit'];  
     
     $entries = fetchEntries($format, $selector, $increase, $start, $limit);
-   
-	Slim::getInstance()->render('index.php', array(
+
+    
+   $templateData = array(
    		'entries' 	=> $entries,
        	'increase' 	=> $increase,
    		'start' 	=> $start,
 		'limit' 	=> $limit,
        	'format'  	=> htmlentities($format),
 		'selector' 	=> htmlentities($selector),
-   	));
+   	); 
+   
+   	
+    if ($_POST['output'] == "sqlite") {
+		$tmpFile = saveEntriesToSqlite($entries);
+		$templateData['downloadId'] = substr(basename($tmpFile), strlen(SCRAPPR_PREFIX));
+    }
+    
+	Slim::getInstance()->render('index.php', $templateData);
+    
 }
 
 $app->post('/', "p1");
+
+
+function p2($id) {
+	
+	$path = 'tmp/' . SCRAPPR_PREFIX . $id;
+    
+	header("Content-Type: application/force-download");
+    header("Content-Disposition: attachment; filename=".SCRAPPR_PREFIX.date("Ymd").".db");
+    header("Content-Length: " . filesize($path));
+    readfile($path);
+    
+    //unlink($path); //FIXME unlink won't work, because readfile keeps file handle
+}
+$app->get('/download/:id', 'p2');
 
 $app->run();

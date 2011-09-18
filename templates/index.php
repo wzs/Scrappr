@@ -39,6 +39,16 @@
 					Limit scrapped pages <em>0 for no-limit</em>
 					<input type="number" name="limit" tabindex="-1" value="<?php echo $limit ?>" />
 				</label>
+				
+				<label>
+					Output format:
+					<select name="output" tabindex="-1">
+						<option value="html">HTML</option>
+						<option value="sqlite">sqlite db</option>
+					</select>
+				</label>
+				
+				
 			</fieldset>
 			
 			<p><input type="submit" value="Scrap'em all!" /></p>
@@ -47,12 +57,15 @@
 	
 	<div id="placeholder" class="prepend-1 span-22 append-1">
 		<div id="content">
-		<?php if (isset($entries)): ?>
-			<ol>
-			<?php foreach ($entries as $entry): ?>
-				<li><?php echo $entry ?></li>
-			<?php endforeach; ?>
-			</ol>
+		
+		<?php if ($downloadId):?>
+			<p class="span-4 append-10 prepend-10 download" ><a href="download/<?php echo $downloadId ?>" target="_blank">Download sqlite database</a></p>
+		<?php elseif (count($entries)): ?>
+				<ol>
+				<?php foreach ($entries as $entry): ?>
+					<li><?php echo $entry ?></li>
+				<?php endforeach; ?>
+				</ol>
 		<?php endif ?>
 		</div>
 	</div>
