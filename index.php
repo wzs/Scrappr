@@ -16,6 +16,7 @@ function g1() {
     	'limit'		=> "0",
     	'format'	=> "",
     	'selector'	=> "",
+    	'minEntryLength' => "0",
     ));
 }
 $app->get('/', "g1");
@@ -26,8 +27,9 @@ function p1() {
     $increase 	= $_POST['increase'];
     $start 		= $_POST['start'];
     $limit 		= $_POST['limit'];  
+    $minEntryLength = $_POST['min_entry_length'];
     
-    $entries = fetchEntries($format, $selector, $increase, $start, $limit);
+    $entries = fetchEntries($format, $selector, $increase, $start, $limit, $minEntryLength);
 
     
    $templateData = array(
@@ -37,6 +39,7 @@ function p1() {
 		'limit' 	=> $limit,
        	'format'  	=> htmlentities($format),
 		'selector' 	=> htmlentities($selector),
+   		'minEntryLength' => $minEntryLength,
    	); 
    
    	
@@ -57,7 +60,7 @@ function p2($id) {
 	$path = 'tmp/' . SCRAPPR_PREFIX . $id;
     
 	header("Content-Type: application/force-download");
-    header("Content-Disposition: attachment; filename=".SCRAPPR_PREFIX.date("Ymd").".db");
+    header("Content-Disposition: attachment; filename=".SCRAPPR_PREFIX.date("YmdHi").".db");
     header("Content-Length: " . filesize($path));
     readfile($path);
     

@@ -1,5 +1,5 @@
 # Tmp files
-tmp/*
+tmp/[^.]
 
 # Project Settings  #
 .buildpath

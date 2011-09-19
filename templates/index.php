@@ -47,7 +47,11 @@
 						<option value="sqlite">sqlite db</option>
 					</select>
 				</label>
-				
+
+				<label>
+					Min entry length <em>shorter entries won't be parsed</em>
+					<input type="number" name="min_entry_length" tabindex="-1" value="<?php echo $minEntryLength ?>" />
+				</label>				
 				
 			</fieldset>
 			
@@ -59,7 +63,7 @@
 		<div id="content">
 		
 		<?php if ($downloadId):?>
-			<p class="span-4 append-10 prepend-10 download" ><a href="download/<?php echo $downloadId ?>" target="_blank">Download sqlite database</a></p>
+			<p class="span-4 append-10 prepend-10 download" ><a class="download" href="download/<?php echo $downloadId ?>" target="_blank" download>Download sqlite database</a></p>
 		<?php elseif (count($entries)): ?>
 				<ol>
 				<?php foreach ($entries as $entry): ?>

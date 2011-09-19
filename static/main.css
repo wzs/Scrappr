@@ -15,6 +15,10 @@
 			padding: 3px;
 		}
 		
+		label select {
+			display: block;
+		}
+		
 		label input[type=number] {
 			width: 3em;
 		}
@@ -73,5 +77,14 @@
 		
 		fieldset label {
 			margin-left: 2em;
+		}
+		
+		.download a {
+			width: 140px;
+			height: 40px;
+			background: url('button-download.png');
+			text-indent: -999em;
+			display: block;
+			overflow: hidden;
 		}
 		

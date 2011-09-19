@@ -20,7 +20,7 @@ function strip_tags_content($text, $tags = '', $invert = FALSE) {
   return $text;
 }
 
-function fetchEntries($format, $selector, $increase = 1, $start = 1, $limit = 0) {
+function fetchEntries($format, $selector, $increase = 1, $start = 1, $limit = 0, $minEntryLength = 0) {
 	define(MAX_LIMIT, 1000);
 	
 	
@@ -33,7 +33,11 @@ function fetchEntries($format, $selector, $increase = 1, $start = 1, $limit = 0)
     	$pq = phpQuery::newDocumentFileHTML($docUrl);
     	
     	foreach (pq($selector) as $entry)  {
-    		$entries[] = trim(strip_tags_content($entry->textContent));
+    		$tmp = preg_replace('/<!--(.*)-->/Uis', '', $entry->textContent); //strip html comments
+    		$tmp = trim(strip_tags_content($tmp)); //remove htmt tags with contents
+    		if (strlen($tmp) >= $minEntryLength) {
+    			$entries[] = $tmp;
+    		}
     	}
     	$pageId++;
     	
