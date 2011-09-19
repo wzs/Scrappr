@@ -39,8 +39,12 @@ function fetchEntries($format, $selector, $increase = 1, $start = 1, $limit = 0)
     	
     	$absoluteNextPageUrl = sprintf($format, $pageId * $increase);
     	
-    	$relativeNextPageUrl = explode("/", $absoluteNextPageUrl);
-    	$relativeNextPageUrl = array_pop($relativeNextPageUrl);
+    	//$relativeNextPageUrl = explode("/", $absoluteNextPageUrl);
+    	
+    	//for pages with <base href="...">
+    	$urlComponents = parse_url($docUrl);
+    	$relativeNextPageUrl = str_replace("http://" . $urlComponents['host'] . "/", "", $absoluteNextPageUrl);
+    	
     	
     	$nextPageElement = pq(sprintf('a[href="%s"], a[href="%s]"', $absoluteNextPageUrl, $relativeNextPageUrl));
     	
